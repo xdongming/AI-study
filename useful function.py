@@ -1,8 +1,11 @@
 import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+
 pd.concat([pd.DataFrame(wine.data), pd.DataFrame(wine.target)], axis=1)  # 把属性和标签连接成表格
 
 from sklearn.model_selection import train_test_split
 Xtrain, Xtest, Ytrain, Ytest = train_test_split(wine.data, wine.target, test_size=0.3)  # 划分训练集和测试集
+.reset_index()    #重置索引，在划分训练集和测试集之后都要重置索引
 
 clf.predict(Xtest)  # predict返回每个测试样本的分类/回归结果
 
@@ -25,3 +28,19 @@ data = data.dropna(axis=0)  # 删除有缺失值的行
 
 labels = data[''].unique().tolist()  # 查看取值
 data[''] = data[''].apply(lambda x: labels.index(x))  # 将标签中的字符串变成索引，即转化为离散数字
+
+'''
+网格搜索确定参数
+'''
+import numpy as np
+from sklearn.model_selection import GridSearchCV
+parameters={'splitter':('best','random')
+        ,'criterion':("gini","entropy")
+        ,"max_depth":[*range(1,10)]
+        ,'min_samples_leaf':[*range(1,50,5)]
+        ,'min_impurity_decrease':[*np.linspace(0,0.5,20)]}
+clf=DecisionTreeClassifier(random_state=25)
+GS=GridSearchCV(clf,parameters,cv=10)
+GS.fit(Xtrain,Ytrain)
+GS.best_params_()
+GS.best_score_()
