@@ -34,7 +34,7 @@ plt.plot(x1, data, c='k')
 plt.plot(x2, [data[data_num - 1], *pred], c='b')
 plt.show()
 
-
+#xgboost调参模板，n_estimators和eta用网格搜索调好
 from time import time
 import datetime
 dtrain=xgb.DMatrix(Xtrain,Ytrain)
